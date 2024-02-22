@@ -22,5 +22,5 @@ Route::get('/admin',[AdminController::class,'index']);
 Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
 Route::get('dashboard', [AdminController::class, 'dashboard']); 
 Route::get('logout', [AdminController::class, 'logout'])->name('logout');
-Route::get('/students',[StudentClassController::class,'gettop3studentsclasswise']);
-Route::get('/students/subjectwise',[StudentClassController::class,'gettop3studentssubjectwise']);
+
+Route::get('/GetTopStudents_ClassWise',[StudentClassController::class,'getTopStudentsClassWise']);

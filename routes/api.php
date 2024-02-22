@@ -19,6 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/GetTopStudents_ClassWise',[StudentClassController::class,'getTopStudentsClassWise']);
-Route::get('/GetTopStudents_SubjectWise',[StudentClassController::class,'getTopStudentsSubjectWise']);
-Route::get('/GetTopStudents_Last_5_Years',[StudentClassController::class,'getTopStudentsLast5Years']);
+Route::get('/get-top-students-class-wise  ',[StudentClassController::class,'getTopStudentsClassWise']);
+Route::get('/get-top-students-subject-wise  ',[StudentClassController::class,'getTopStudentsSubjectWise']);
+Route::get('/get-top-students-last-5-years',[StudentClassController::class,'getTopStudentsLast5Years']);

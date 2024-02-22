@@ -74,7 +74,8 @@ class StudentRepository implements StudentRepositoryInterface
             ->join('standards','grades.standard_id', '=','standards.id')
             ->join('academicyears','grades.academicyear_id', '=','academicyears.id')
             ->where('academicyears.start_year', '=', $selectedAcademicYear)
-            ->groupBy('subjects.subject_name','standards.name','students.id','students.firstname','students.lastname','grades.marks')
+            ->groupBy('subjects.subject_name','standards.name','students.id','students.firstname',
+                      'students.lastname','grades.marks')
             ->orderBy('subjects.subject_name')
             ->orderBy('standards.name')
             ->orderByDesc('grades.marks')
