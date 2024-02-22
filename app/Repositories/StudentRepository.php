@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class StudentRepository implements StudentRepositoryInterface
 {
-    public function GetTopStudents_ClassWise()
-    {   
+
+    public function  getTopStudentsClassWise()
+    {
         $selectedAcademicYear = Carbon::now()->year;
+
         $topStudentsByGrade = grade::select(
             'standards.name as standard',
             'students.id',
@@ -28,9 +30,7 @@ class StudentRepository implements StudentRepositoryInterface
             ->where('academicyears.start_year', '=', $selectedAcademicYear)
             ->groupBy('standards.name', 'students.id', 'students.firstname', 'students.lastname')
             ->orderBy('standards.name')
-
             ->orderByDesc('total_marks')
-
             ->get();
         $filteredResults = collect();
 
@@ -46,7 +46,6 @@ class StudentRepository implements StudentRepositoryInterface
             if ($filteredResults[$grade]->count() < 3) {
                 $filteredResults[$grade]->push([
                     'id' => $student['id'],
-
                     'firstname' => $student['firstname'],
                     'lastname' => $student['lastname'],
                     'marks' => $student['total_marks'],
@@ -56,7 +55,7 @@ class StudentRepository implements StudentRepositoryInterface
 
         return $filteredResults;
     }
-    public function GetTopStudents_SubjectWise()
+    public function getTopStudentsSubjectWise()
     {
         $selectedAcademicYear = Carbon::now()->year;
 
@@ -70,23 +69,22 @@ class StudentRepository implements StudentRepositoryInterface
 
 
         )
-            ->join('students', 'grades.student_id', '=', 'students.id')
-            ->join('subjects', 'grades.subject_id', '=', 'subjects.id')
-            ->join('standards', 'grades.standard_id', '=', 'standards.id')
-
-            ->join('academicyears', 'grades.academicyear_id', '=', 'academicyears.id')
+            ->join('students','grades.student_id', '=','students.id')
+            ->join('subjects','grades.subject_id', '=','subjects.id')
+            ->join('standards','grades.standard_id', '=','standards.id')
+            ->join('academicyears','grades.academicyear_id', '=','academicyears.id')
             ->where('academicyears.start_year', '=', $selectedAcademicYear)
-            ->groupBy('subjects.subject_name', 'standards.name', 'students.id', 'students.firstname', 'students.lastname', 'grades.marks')
-
+            ->groupBy('subjects.subject_name','standards.name','students.id','students.firstname','students.lastname','grades.marks')
             ->orderBy('subjects.subject_name')
             ->orderBy('standards.name')
             ->orderByDesc('grades.marks')
-
-
             ->get();
 
 
-        $organizedData = collect();
+          
+            $organizedData = collect();
+
+
         foreach ($topStudentsBySubject as $student) {
             $subjectName = $student['subject_name'];
             $standard = $student['standard'];
@@ -115,7 +113,7 @@ class StudentRepository implements StudentRepositoryInterface
 
         return $organizedData;
     }
-    public function GetTopStudents_Last_5_Years()
+    public function getTopStudentsLast5Years()
     {
         $last5Years = Carbon::now()->subYears(5)->year;
         $topStudentsBygrade = grade::select(
@@ -130,27 +128,24 @@ class StudentRepository implements StudentRepositoryInterface
 
         )
             ->join('students', 'grades.student_id', '=', 'students.id')
-
             ->join('academicyears', 'grades.academicyear_id', '=', 'academicyears.id')
             ->join('standards', 'grades.standard_id', '=', 'standards.id')
             ->where('academicyears.start_year', '>=', $last5Years)
             ->groupBy('standards.name', 'students.id', 'students.firstname', 'students.lastname', 'academicyears.start_year')
-
             ->orderByDesc('academicyears.start_year')
             ->orderBy('standards.name')
             ->orderByDesc('total_marks')
-
-
-
             ->get();
         //return $topStudentsBySubject;
 
         $organizedData = collect();
+
+
         foreach ($topStudentsBygrade as $student) {
             $Academicyear = $student['year'];
             $standard = $student['standard'];
 
-            // Check if we already have data for this subject
+            // Check if we already have data for this year
             if (!$organizedData->has($Academicyear)) {
                 $organizedData[$Academicyear] = collect();
             }
@@ -164,7 +159,6 @@ class StudentRepository implements StudentRepositoryInterface
             if ($organizedData[$Academicyear][$standard]->count() < 3) {
                 $organizedData[$Academicyear][$standard]->push([
                     'id' => $student['id'],
-
                     'firstname' => $student['firstname'],
                     'lastname' => $student['lastname'],
                     'marks' => $student['total_marks'],
@@ -174,6 +168,5 @@ class StudentRepository implements StudentRepositoryInterface
 
 
         return $organizedData;
-
     }
 }

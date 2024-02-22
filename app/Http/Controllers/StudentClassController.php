@@ -8,26 +8,28 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class StudentClassController extends Controller
 {
     public $studentRepositoryInterface;
+
     public function __construct(StudentRepositoryInterface $studentRepositoryInterface)
     {
         $this->studentRepositoryInterface = $studentRepositoryInterface;
     }
 
-    public function GetTopStudents_ClassWise()
+    public function getTopStudentsClassWise()
     {    
-        return $this->studentRepositoryInterface->GetTopStudents_ClassWise();
+        return $this->studentRepositoryInterface->getTopStudentsClassWise();
     }
 
-    public function GetTopStudents_SubjectWise()
+    public function getTopStudentsSubjectWise()
     {
-       return $this->studentRepositoryInterface->GetTopStudents_SubjectWise();
+       return $this->studentRepositoryInterface->getTopStudentsSubjectWise();
     }
 
-    public function GetTopStudents_Last_5_Years()
+    public function getTopStudentsLast5Years()
     {
-      return $this->studentRepositoryInterface->GetTopStudents_Last_5_Years();
+      return $this->studentRepositoryInterface->getTopStudentsLast5Years();
     }
 }
