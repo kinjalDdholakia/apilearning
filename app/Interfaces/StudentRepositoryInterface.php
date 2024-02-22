@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Interfaces;
-interface StudentRepositoryInterface
+interface StudentRepositoryInterface 
 {
     public function GetTopStudents_ClassWise();
     public function GetTopStudents_SubjectWise();
