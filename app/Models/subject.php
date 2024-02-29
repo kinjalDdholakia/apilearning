@@ -12,4 +12,9 @@ class subject extends Model
         'subject_name',
         
     ];
+
+    public function grades(){
+        return $this->hasMany(grade::class);
+    }
 }
+   

@@ -12,4 +12,8 @@ class standard extends Model
         'name',
         
     ];
+
+    public function grades(){
+        return $this->hasMany(grade::class);
+    }
 }

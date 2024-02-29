@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\StudentRepositoryInterface;
-use App\Models\grade;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 
 
 class StudentClassController extends Controller

@@ -13,4 +13,8 @@ class academicyear extends Model
         'end_year'
         
     ];
+
+    public function grades(){
+        return $this->hasMany(grade::class);
+    }
 }
